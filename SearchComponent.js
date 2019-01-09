@@ -145,49 +145,66 @@ class SearchComponent extends Component {
     const { classes } = this.props;
     const { inputValue, selectedItem } = this.state;
     return (
-      <div style={{ width: "20%" }}>
-        <Downshift
-          id="downshift-multiple"
-          inputValue={inputValue}
-          onChange={this.handleChange}
-          selectedItem={selectedItem}
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center"
+        }}
+      >
+        <div
+          style={{
+            width: "20%"
+          }}
         >
-          {({
-            getInputProps,
-            getItemProps,
-            isOpen,
-            inputValue: inputValue2,
-            selectedItem: selectedItem2,
-            highlightedIndex
-          }) => (
-            <div className={classes.container}>
-              {this.renderInput({
-                id: "downshift-multiple-input",
-                fullWidth: true,
-                classes,
-                InputProps: getInputProps({
-                  startAdornment: selectedItem.map(item => <span>{item}</span>),
-                  onChange: this.handleInputChange,
-                  onKeyDown: this.handleKeyDown,
-                  selectedItem: selectedItem
-                })
-              })}
-              {isOpen ? (
-                <Paper className={classes.paper} square>
-                  {this.getSuggestions(inputValue2).map((suggestion, index) => {
-                    return renderSuggestion({
-                      suggestion,
-                      index,
-                      itemProps: getItemProps({ item: suggestion.name }),
-                      highlightedIndex,
-                      selectedItem: selectedItem2
-                    });
-                  })}
-                </Paper>
-              ) : null}
-            </div>
-          )}
-        </Downshift>
+          <Downshift
+            id="downshift-multiple"
+            inputValue={inputValue}
+            onChange={this.handleChange}
+            selectedItem={selectedItem}
+          >
+            {({
+              getInputProps,
+              getItemProps,
+              isOpen,
+              inputValue: inputValue2,
+              selectedItem: selectedItem2,
+              highlightedIndex
+            }) => (
+              <div className={classes.container}>
+                {this.renderInput({
+                  id: "downshift-multiple-input",
+                  fullWidth: true,
+                  classes,
+                  InputProps: getInputProps({
+                    startAdornment: selectedItem.map(item => (
+                      <span>{item}</span>
+                    )),
+                    onChange: this.handleInputChange,
+                    onKeyDown: this.handleKeyDown,
+                    selectedItem: selectedItem
+                  })
+                })}
+                {isOpen ? (
+                  <Paper className={classes.paper} square>
+                    {this.getSuggestions(inputValue2).map(
+                      (suggestion, index) => {
+                        return renderSuggestion({
+                          suggestion,
+                          index,
+                          itemProps: getItemProps({ item: suggestion.name }),
+                          highlightedIndex,
+                          selectedItem: selectedItem2
+                        });
+                      }
+                    )}
+                  </Paper>
+                ) : null}
+              </div>
+            )}
+          </Downshift>
+        </div>
       </div>
     );
   }
